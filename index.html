@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Apu Outdoors — El ascenso. Equipo de montaña a pedido en Salta</title>
-<meta name="description" content="Apu Outdoors fabrica a pedido bolsas de dormir, magnesieras y colchonetas para montañismo, senderismo y escalada en Salta. Subí la montaña, campamento por campamento.">
+<title>Apu Outdoors — Equipo de montaña a pedido en Salta</title>
+<meta name="description" content="Apu Outdoors fabrica a pedido bolsas de dormir, magnesieras y colchonetas para montañismo, senderismo y escalada en Salta. Del día a la noche, en la puna.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
-<link rel="preload" as="image" href="assets/hero/poster.webp" fetchpriority="high">
-<link rel="stylesheet" href="styles.css?v=20260715a">
+<link rel="preload" as="image" href="assets/hero/day.webp" fetchpriority="high">
+<link rel="stylesheet" href="styles.css?v=20260715b">
 </head>
 <body>
 
-<a class="skip-link" href="#cima">Saltar al contenido</a>
+<a class="skip-link" href="#intro">Saltar al contenido</a>
 
 <!-- Splash -->
 <div class="splash" data-splash aria-hidden="true">
@@ -23,19 +23,27 @@
   <div class="splash-bar"><span></span></div>
 </div>
 
-<!-- Fixed nav -->
+<!-- ===== FONDO FIJO: montaña día→noche (scrubbed por scroll de toda la página) ===== -->
+<div class="sky" data-sky aria-hidden="true">
+  <img class="sky-fallback sky-day" src="assets/hero/day.webp" alt="">
+  <img class="sky-fallback sky-night" src="assets/hero/night.webp" alt="">
+  <video class="sky-video" data-sky-video poster="assets/hero/day.webp" muted playsinline preload="auto" tabindex="-1">
+    <source src="assets/hero/daynight.mp4" type="video/mp4">
+  </video>
+  <div class="sky-grade"></div>
+  <div class="sky-grain"></div>
+</div>
+
+<!-- Nav -->
 <nav class="nav" data-nav>
-  <a href="#top" class="nav-brand">
-    <span>Apu Outdoors</span>
-  </a>
+  <a href="#top" class="nav-brand">Apu Outdoors</a>
   <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">
-    <span></span><span></span><span></span>
-    <span class="sr-only">Menú</span>
+    <span></span><span></span><span></span><span class="sr-only">Menú</span>
   </button>
   <div class="nav-menu" id="nav-menu" data-nav-menu>
-    <a href="#cima" class="nav-link">La marca</a>
+    <a href="#intro" class="nav-link">La marca</a>
     <a href="#taller" class="nav-link">El taller</a>
-    <a href="#catalogo" class="nav-link">Equipo</a>
+    <a href="#equipo" class="nav-link">Equipo</a>
     <a href="#pedido" class="nav-link">Pedido</a>
     <a href="#contacto" class="btn btn-nav" data-wa>WhatsApp</a>
   </div>
@@ -45,144 +53,83 @@
 <div class="altimetro" data-altimetro aria-hidden="true">
   <span class="alt-top">Cumbre · 6.380 m</span>
   <span class="alt-bar"><span class="alt-fill" data-alt-fill></span><span class="alt-dot" data-alt-dot></span></span>
-  <span class="alt-read"><b data-alt-value>1.187</b> m s.n.m.</span>
+  <span class="alt-read"><b data-alt-value>1.187</b> m</span>
 </div>
 
-<!-- ============ HERO: EL ASCENSO (scroll-scrubbed video) ============ -->
-<section class="ascent" id="top" data-ascent>
-  <div class="ascent-sticky">
-    <video class="ascent-video" data-ascent-video
-           poster="assets/hero/poster.webp"
-           muted playsinline preload="auto" tabindex="-1">
-      <source src="assets/hero/ascenso.mp4" type="video/mp4">
-    </video>
-    <div class="ascent-grade" aria-hidden="true"></div>
-    <div class="ascent-grain" aria-hidden="true"></div>
+<!-- ===== CONTENIDO que flota sobre la montaña ===== -->
+<main id="top" class="flow">
 
-    <!-- Título inicial -->
-    <div class="ascent-intro" data-ascent-layer="intro">
-      <p class="kicker">Fabricación a pedido · Salta, Argentina</p>
-      <h1 class="ascent-title">APU<span>OUTDOORS</span></h1>
-      <p class="ascent-sub">Se cose acá. Se prueba allá arriba.</p>
-      <p class="ascent-hint" data-ascent-hint>Bajá para empezar el ascenso ↓</p>
+  <!-- Hero -->
+  <header class="hero-block">
+    <p class="kicker" data-reveal>Fabricación a pedido · Salta, Argentina</p>
+    <h1 class="hero-title">APU<span>OUTDOORS</span></h1>
+    <p class="hero-sub" data-reveal>Se cose acá. Se prueba allá arriba.</p>
+    <div class="hero-cta" data-reveal>
+      <a class="btn btn-primary" data-wa>Empezar un pedido</a>
+      <a class="btn btn-ghost" href="#equipo">Ver el equipo</a>
     </div>
+    <span class="scroll-hint" data-scroll-hint>Bajá — cae la noche ↓</span>
+  </header>
 
-    <!-- Waypoints de campamento -->
-    <div class="waypoint" data-waypoint="0">
-      <div class="wp-inner">
-        <span class="wp-alt">2.900 m</span>
-        <span class="wp-tag">Campamento Base</span>
-        <h2 class="wp-title">Senderismo</h2>
-        <p class="wp-copy">Equipo para caminar largo, liviano y sin apuro. Donde empieza toda salida.</p>
-      </div>
-    </div>
-    <div class="waypoint" data-waypoint="1">
-      <div class="wp-inner">
-        <span class="wp-alt">4.200 m</span>
-        <span class="wp-tag">Campamento 1</span>
-        <h2 class="wp-title">Escalada</h2>
-        <p class="wp-copy">Magnesieras artesanales, cosidas pensando en la roca. No en el catálogo.</p>
-      </div>
-    </div>
-    <div class="waypoint" data-waypoint="2">
-      <div class="wp-inner">
-        <span class="wp-alt">5.100 m</span>
-        <span class="wp-tag">Campamento de Altura</span>
-        <h2 class="wp-title">Montañismo</h2>
-        <p class="wp-copy">Bolsas de dormir y colchonetas a medida. Abrigo real para la noche andina.</p>
-      </div>
-    </div>
-    <div class="waypoint" data-waypoint="3">
-      <div class="wp-inner">
-        <span class="wp-alt">6.380 m</span>
-        <span class="wp-tag">Cumbre</span>
-        <h2 class="wp-title">A pedido</h2>
-        <p class="wp-copy">Vos elegís la salida. Nosotros cosemos el resto.</p>
-        <a class="btn btn-primary" data-wa>Empezar un pedido</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<main id="cima">
-
-  <!-- Intro -->
-  <section class="intro">
-    <div class="container">
-      <p class="kicker" data-reveal>La marca</p>
-      <h2 class="section-title" data-reveal>Nacimos para la vida al aire libre.</h2>
-      <p class="intro-lead" data-reveal>Apu acerca el equipo que la montaña pide — montañismo, senderismo, escalada y pesca — y lo fabrica a pedido, uno por uno, en Salta. Cada pieza sale de una conversación, no de un molde.</p>
-      <div class="stats" data-reveal>
-        <div class="stat"><b>A pedido</b><span>Cada pieza fabricada a medida</span></div>
-        <div class="stat"><b>Salta</b><span>Cosido en la puna, probado en altura</span></div>
-        <div class="stat"><b>Outdoor</b><span>Montaña, trekking, escalada y pesca</span></div>
+  <!-- Campamento: Senderismo -->
+  <section class="camp" id="intro" data-camp>
+    <div class="panel">
+      <span class="panel-alt">2.900 m · Campamento Base</span>
+      <h2 class="panel-title">Senderismo</h2>
+      <p>Apu nace para la vida al aire libre. Equipo para caminar largo, liviano y sin apuro — donde empieza toda salida.</p>
+      <div class="mini-stats">
+        <div><b>A pedido</b><span>Cada pieza a medida</span></div>
+        <div><b>Salta</b><span>Cosido en la puna</span></div>
       </div>
     </div>
   </section>
 
   <!-- Taller -->
-  <section class="taller" id="taller">
-    <div class="container taller-grid">
-      <div class="taller-text">
-        <p class="kicker" data-reveal>El taller</p>
-        <h2 class="section-title" data-reveal>Cada pieza, cosida a mano.</h2>
-        <p data-reveal>Bolsas de dormir, magnesieras y colchonetas se fabrican una por una a partir de lo que cada persona necesita: uso, clima, medida, color. Nada sale de una línea de producción — sale de una máquina de coser en Salta.</p>
-        <ul class="chips" data-reveal>
-          <li>Bolsas de dormir</li><li>Magnesieras</li><li>Colchonetas</li>
-        </ul>
-      </div>
-      <figure class="taller-fig" data-reveal>
-        <img src="assets/images/camp-altura.webp" alt="Carpa iluminada de noche en un campamento de altura bajo la Vía Láctea" loading="lazy" decoding="async">
+  <section class="camp camp-right" id="taller" data-camp>
+    <div class="panel">
+      <span class="panel-alt">El taller · La Santa Trinidad</span>
+      <h2 class="panel-title">Cada pieza, a mano</h2>
+      <p>Bolsas de dormir, magnesieras y colchonetas se fabrican una por una, en una máquina de coser en Salta. Nada sale de un molde — sale de una conversación.</p>
+      <figure class="panel-media">
+        <img src="assets/images/camp-altura.webp" alt="Carpa iluminada de noche bajo la Vía Láctea en un campamento de altura" loading="lazy" decoding="async">
       </figure>
     </div>
   </section>
 
-  <!-- Catálogo -->
-  <section class="catalogo" id="catalogo">
-    <div class="container">
-      <p class="kicker" data-reveal>El equipo</p>
-      <h2 class="section-title" data-reveal>Piezas que responden en la montaña.</h2>
-    </div>
-    <div class="cat-grid">
-      <article class="prod prod-wide" data-reveal>
-        <div class="prod-img"><img src="assets/products/bolsa-pro.webp" alt="Bolsa de dormir Apu roja y naranja sobre colchoneta, junto a una carpa iluminada al anochecer" loading="lazy" decoding="async"></div>
-        <div class="prod-body">
-          <span class="prod-num">01</span>
-          <h3>Bolsa de dormir</h3>
-          <p>Mummy a medida. Temperatura de confort, largo y colores a elección.</p>
-          <a class="prod-link" data-wa>Consultar por WhatsApp →</a>
-        </div>
-      </article>
-      <article class="prod" data-reveal>
-        <div class="prod-img"><img src="assets/products/magnesiera-pro.webp" alt="Magnesiera Apu naranja artesanal sobre roca oscura, con el nevado difuminado de fondo" loading="lazy" decoding="async"></div>
-        <div class="prod-body">
-          <span class="prod-num">02</span>
-          <h3>Magnesiera</h3>
-          <p>Cosida para la roca. Cordón regulable y cierre firme.</p>
-          <a class="prod-link" data-wa>Consultar por WhatsApp →</a>
-        </div>
-      </article>
-      <article class="prod" data-reveal>
-        <div class="prod-img"><img src="assets/images/camp-base.webp" alt="Campamento base al atardecer en el coirón dorado, carpa encendida y mochilas frente al nevado" loading="lazy" decoding="async"></div>
-        <div class="prod-body">
-          <span class="prod-num">03</span>
-          <h3>Colchoneta</h3>
-          <p>Aislación para la noche andina. Medida y peso a pedido.</p>
-          <a class="prod-link" data-wa>Consultar por WhatsApp →</a>
-        </div>
-      </article>
+  <!-- Campamento: Escalada -->
+  <section class="camp" id="equipo" data-camp>
+    <div class="panel">
+      <span class="panel-alt">4.200 m · Campamento 1</span>
+      <h2 class="panel-title">Escalada</h2>
+      <p>Magnesieras artesanales, cosidas pensando en la roca.</p>
+      <figure class="panel-media panel-media-tall">
+        <img src="assets/products/magnesiera-pro.webp" alt="Magnesiera Apu naranja sobre roca oscura con el nevado difuminado" loading="lazy" decoding="async">
+      </figure>
+      <a class="panel-link" data-wa>Consultar magnesiera →</a>
     </div>
   </section>
 
-  <!-- Configurador de pedido -->
-  <section class="config" id="pedido">
-    <div class="container config-grid">
-      <div class="config-panel">
-        <p class="kicker" data-reveal>Armá tu pedido</p>
-        <h2 class="section-title" data-reveal>Configurá y te cotizamos.</h2>
-        <p class="config-note" data-reveal>Elegí lo que necesitás y te abrimos el WhatsApp con el pedido escrito. Los precios los confirma Fran según medida y materiales.</p>
+  <!-- Campamento: Montañismo -->
+  <section class="camp camp-right" data-camp>
+    <div class="panel">
+      <span class="panel-alt">5.100 m · Campamento de Altura</span>
+      <h2 class="panel-title">Montañismo</h2>
+      <p>Bolsas de dormir y colchonetas a medida. Abrigo real para la noche andina.</p>
+      <figure class="panel-media">
+        <img src="assets/products/bolsa-pro.webp" alt="Bolsa de dormir Apu roja y naranja junto a una carpa iluminada al anochecer" loading="lazy" decoding="async">
+      </figure>
+      <a class="panel-link" data-wa>Consultar bolsa de dormir →</a>
+    </div>
+  </section>
 
-        <div class="config-field" data-reveal>
+  <!-- Configurador -->
+  <section class="camp camp-center" id="pedido" data-camp>
+    <div class="panel panel-wide">
+      <span class="panel-alt">6.380 m · Cumbre</span>
+      <h2 class="panel-title">Armá tu pedido</h2>
+      <p>Vos elegís la salida. Nosotros cosemos el resto. Configurá y te abrimos el WhatsApp con el pedido escrito.</p>
+      <div class="config">
+        <div class="config-field">
           <label>Pieza</label>
           <div class="opt-row" data-config-group="pieza">
             <button class="opt is-active" data-value="Bolsa de dormir">Bolsa de dormir</button>
@@ -190,16 +137,16 @@
             <button class="opt" data-value="Colchoneta">Colchoneta</button>
           </div>
         </div>
-        <div class="config-field" data-reveal>
-          <label>Uso / actividad</label>
+        <div class="config-field">
+          <label>Uso</label>
           <div class="opt-row" data-config-group="uso">
             <button class="opt is-active" data-value="Montañismo">Montañismo</button>
             <button class="opt" data-value="Senderismo">Senderismo</button>
             <button class="opt" data-value="Escalada">Escalada</button>
           </div>
         </div>
-        <div class="config-field" data-reveal>
-          <label>Color principal</label>
+        <div class="config-field">
+          <label>Color</label>
           <div class="opt-row" data-config-group="color">
             <button class="opt is-active" data-value="Rojo">Rojo</button>
             <button class="opt" data-value="Naranja">Naranja</button>
@@ -207,65 +154,38 @@
             <button class="opt" data-value="A definir">A definir</button>
           </div>
         </div>
-        <a class="btn btn-primary config-cta" data-config-cta>Enviar pedido por WhatsApp</a>
-      </div>
-      <div class="config-preview" data-reveal>
-        <img src="assets/products/bolsa-pro.webp" alt="" data-config-img aria-hidden="true">
-        <div class="config-readout">
-          <span data-config-readout>Bolsa de dormir · Montañismo · Rojo</span>
-        </div>
+        <div class="config-readout"><span data-config-readout>Bolsa de dormir · Montañismo · Rojo</span></div>
+        <a class="btn btn-primary" data-config-cta>Enviar pedido por WhatsApp</a>
       </div>
     </div>
   </section>
 
   <!-- Contacto -->
-  <section class="contacto" id="contacto">
-    <div class="container container-narrow">
-      <p class="kicker" data-reveal>Hablemos</p>
-      <h2 class="section-title" data-reveal>Contanos tu salida.</h2>
-      <p class="contacto-lead" data-reveal>Dejanos los datos y te respondemos para coordinar medida, color y plazos. También podés escribirnos directo.</p>
+  <section class="camp camp-center" id="contacto" data-camp>
+    <div class="panel">
+      <span class="panel-alt">Hablemos</span>
+      <h2 class="panel-title">Contanos tu salida</h2>
       <form class="cta-form" data-contact-form novalidate>
-        <div class="field">
-          <input type="text" id="f-nombre" name="nombre" placeholder=" " required>
-          <label for="f-nombre">Nombre</label>
-        </div>
-        <div class="field">
-          <input type="text" id="f-salida" name="salida" placeholder=" ">
-          <label for="f-salida">¿Qué salida tenés en mente?</label>
-        </div>
-        <div class="field">
-          <textarea id="f-msg" name="mensaje" rows="4" placeholder=" " required></textarea>
-          <label for="f-msg">Contanos qué necesitás</label>
-        </div>
+        <div class="field"><input type="text" id="f-nombre" name="nombre" placeholder=" " required><label for="f-nombre">Nombre</label></div>
+        <div class="field"><input type="text" id="f-salida" name="salida" placeholder=" "><label for="f-salida">¿Qué salida tenés en mente?</label></div>
+        <div class="field"><textarea id="f-msg" name="mensaje" rows="3" placeholder=" " required></textarea><label for="f-msg">Contanos qué necesitás</label></div>
         <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
       </form>
-      <p class="contacto-alt">o directo a <a data-wa>WhatsApp</a> · <a href="#" data-ig>Instagram</a></p>
+      <p class="panel-alt2">o directo a <a data-wa>WhatsApp</a> · <a href="#" data-ig>Instagram</a></p>
     </div>
   </section>
-</main>
 
-<footer class="footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <span class="footer-logo">APU OUTDOORS</span>
-      <p>Equipo de montaña fabricado a pedido. Salta, Argentina.</p>
-    </div>
-    <nav class="footer-nav">
-      <a href="#taller">El taller</a>
-      <a href="#catalogo">Equipo</a>
-      <a href="#pedido">Pedido</a>
-      <a data-wa>WhatsApp</a>
-    </nav>
-  </div>
-  <div class="container footer-bottom">
-    <p>© 2026 Apu Outdoors.</p>
-    <p class="footer-credits">Hero e imágenes generadas con IA (Higgsfield) · Producto real de Apu.</p>
-  </div>
-</footer>
+  <footer class="footer">
+    <span class="footer-logo">APU OUTDOORS</span>
+    <p>Equipo de montaña fabricado a pedido · Salta, Argentina</p>
+    <p class="footer-credits">© 2026 Apu Outdoors · Fondo e imágenes generadas con IA (Higgsfield) · Producto real de Apu.</p>
+  </footer>
+
+</main>
 
 <script defer src="lib/gsap.min.js"></script>
 <script defer src="lib/ScrollTrigger.min.js"></script>
 <script defer src="lib/manifest.js"></script>
-<script defer src="main.js?v=20260715a"></script>
+<script defer src="main.js?v=20260715b"></script>
 </body>
 </html>
