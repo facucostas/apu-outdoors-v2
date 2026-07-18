@@ -7,66 +7,64 @@
     var max = document.documentElement.scrollHeight - window.innerHeight;
     return max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
   }
+  var ZONES = ["Río · Pesca", "Pared · Escalada", "Campamento", "Cumbre · Montañismo"];
+  var ALTS = ["1.187", "4.200", "5.100", "6.380"];
 
-  // ===== Fondo: video montaña día->noche scrubbed por scroll + dron (scale/pan) =====
-  function initSky(){
-    var sky = $("[data-sky]"); if(!sky) return function(){};
-    var video = $("[data-sky-video]"), night = $(".sky-night");
-    var altFill = $("[data-alt-fill]"), altVal = $("[data-alt-value]"), hint = $("[data-hint]");
-    var BASE = 1187, PEAK = 6380;
-    var useVideo = false, duration = 0;
-
-    if (video){
-      video.addEventListener("loadedmetadata", function(){ duration = video.duration || 0; if(duration>0){ useVideo=true; sky.classList.add("has-video"); } });
-      video.addEventListener("error", function(){ sky.classList.add("no-video"); });
-      video.play().then(function(){ video.pause(); }).catch(function(){});
-      setTimeout(function(){ if(!useVideo) sky.classList.add("no-video"); }, 4000);
-    } else { sky.classList.add("no-video"); }
-
+  // ===== Mapa lateral: nodos + etiquetas + marcador =====
+  function initRoute(){
+    var path = $("[data-route]"), fill = $("[data-route-fill]"), marker = $("[data-route-marker]");
+    var nodesG = $("[data-route-nodes]"), labelsWrap = $("[data-route-labels]");
+    if (!path) return function(){};
+    var len = path.getTotalLength();
+    fill.style.strokeDasharray = len; fill.style.strokeDashoffset = len;
+    var nodeT = [0.02, 0.35, 0.67, 0.99];
+    var nodePts = nodeT.map(function(t){ return path.getPointAtLength(len * t); });
+    nodePts.forEach(function(pt, i){
+      var c = document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx", pt.x); c.setAttribute("cy", pt.y); c.setAttribute("r", 4.2);
+      c.setAttribute("fill","none"); c.setAttribute("stroke","rgba(185,205,130,.6)"); c.setAttribute("stroke-width","2");
+      c.setAttribute("data-node", i); nodesG.appendChild(c);
+      var s = document.createElement("span"); s.textContent = ALTS[i] + " m";
+      s.style.top = (pt.y / 1000 * 100) + "%"; labelsWrap.appendChild(s);
+    });
+    var labels = $$("span", labelsWrap), nodeCircles = $$("[data-node]", nodesG);
     return function(p){
-      // día->noche: scrub video (o fallback opacidad de la imagen noche)
-      if (useVideo && duration){ try{ if(video.readyState>=1) video.currentTime = duration * p; }catch(e){} }
-      if (!useVideo && night){ night.style.opacity = p; }
-      // dron: se mete lentamente + leve paneo mientras subís
-      var scale = (1.05 + p * 0.16).toFixed(3);
-      var ty = (p * -3).toFixed(2);
-      var tx = (Math.sin(p * Math.PI) * 1.5).toFixed(2);
-      var tf = "translate(" + tx + "%," + ty + "%) scale(" + scale + ")";
-      if (video) video.style.transform = tf;
-      $$(".sky-fallback").forEach(function(im){ im.style.transform = tf; });
-      // altímetro
+      var pt = path.getPointAtLength(len * p);
+      marker.setAttribute("cx", pt.x); marker.setAttribute("cy", pt.y);
+      fill.style.strokeDashoffset = (len * (1 - p)).toFixed(1);
+      var zi = clamp(Math.round(p * (ALTS.length - 1)), 0, ALTS.length - 1);
+      labels.forEach(function(l, i){ l.classList.toggle("is-active", i === zi); });
+      nodeCircles.forEach(function(c, i){
+        c.setAttribute("r", i <= zi ? 5.4 : 4.2);
+        c.setAttribute("stroke", i <= zi ? "#b9cd82" : "rgba(185,205,130,.45)");
+      });
+    };
+  }
+
+  function initHud(){
+    var altFill = $("[data-alt-fill]"), altVal = $("[data-alt-value]"), navZone = $("[data-nav-zone]"), hint = $("[data-hint]");
+    var BASE = 1187, PEAK = 6380;
+    return function(p){
       var alt = Math.round(BASE + p*(PEAK-BASE));
       if (altVal) altVal.textContent = alt.toLocaleString("es-AR");
       if (altFill) altFill.style.height = (p*100).toFixed(1)+"%";
+      var zi = clamp(Math.round(p*(ZONES.length-1)),0,ZONES.length-1);
+      if (navZone) navZone.textContent = ZONES[zi];
       if (hint) hint.style.opacity = p > 0.03 ? 0 : 1;
     };
   }
 
-  // ===== Secciones acordeón (click para abrir/expandir) =====
-  function initSections(){
-    var secs = $$("[data-sec]");
-    secs.forEach(function(sec){
-      var head = $("[data-sec-toggle]", sec);
-      head.addEventListener("click", function(){
-        var open = sec.classList.toggle("is-open");
-        head.setAttribute("aria-expanded", open ? "true" : "false");
-        if (open){
-          // cerrar las demás (acordeón de a una)
-          secs.forEach(function(o){ if(o!==sec){ o.classList.remove("is-open"); var h=$("[data-sec-toggle]",o); if(h) h.setAttribute("aria-expanded","false"); } });
-          // llevar la sección abierta a una posición cómoda
-          setTimeout(function(){
-            var top = sec.getBoundingClientRect().top + window.scrollY - 90;
-            window.scrollTo({ top: top, behavior: "smooth" });
-          }, 60);
-        }
-      });
-    });
+  function initReveal(){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add("is-in"); });
+    }, { threshold:.25 });
+    $$("[data-reveal]").forEach(function(el){ io.observe(el); });
   }
 
   function boot(){
-    var updSky = initSky();
-    initSections();
-    function onScroll(){ updSky(docProgress()); }
+    var updRoute = initRoute(), updHud = initHud();
+    initReveal();
+    function onScroll(){ var p = docProgress(); updRoute(p); updHud(p); }
     window.addEventListener("scroll", onScroll, { passive:true });
     window.addEventListener("resize", onScroll);
     onScroll();
