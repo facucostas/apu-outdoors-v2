@@ -3,113 +3,127 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Apu Outdoors — Prototipo del ascenso</title>
+<title>Apu Outdoors — El ascenso</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap">
 <link rel="preload" as="image" href="../assets/zonas/1-pesca.webp" fetchpriority="high">
-<link rel="stylesheet" href="proto.css?v=1">
+<link rel="stylesheet" href="proto.css?v=3">
 </head>
 <body>
 
-<!-- Banner de prototipo -->
-<div class="proto-flag">PROTOTIPO · en revisión</div>
+<div class="proto-flag">Prototipo · en revisión</div>
 
-<!-- Fondo: 4 zonas que se funden según el scroll -->
-<div class="bg" data-bg aria-hidden="true">
-  <img class="bg-layer" data-layer="0" src="../assets/zonas/1-pesca.webp" alt="">
-  <img class="bg-layer" data-layer="1" src="../assets/zonas/2-escalada.webp" alt="">
-  <img class="bg-layer" data-layer="2" src="../assets/zonas/3-campamento.webp" alt="">
-  <img class="bg-layer" data-layer="3" src="../assets/zonas/4-montanismo.webp" alt="">
-  <div class="bg-grade"></div>
+<!-- Escenario: cámara que viaja por un mismo entorno -->
+<div class="stage" data-stage aria-hidden="true">
+  <div class="scene" data-scene="0" style="background-image:url('../assets/zonas/1-pesca.webp')"></div>
+  <div class="scene" data-scene="1" style="background-image:url('../assets/zonas/2-escalada.webp')"></div>
+  <div class="scene" data-scene="2" style="background-image:url('../assets/zonas/3-campamento.webp')"></div>
+  <div class="scene" data-scene="3" style="background-image:url('../assets/zonas/4-montanismo.webp')"></div>
+  <div class="stage-grade"></div>
+  <div class="stage-vein"></div>
 </div>
 
-<!-- Sendero SVG fijo con marcador -->
-<svg class="trail" viewBox="0 0 200 1000" preserveAspectRatio="none" aria-hidden="true">
-  <path id="trailPath" data-trail
-        d="M 150 980 C 60 900, 60 820, 150 760 C 240 700, 40 640, 120 560 C 190 500, 60 440, 150 360 C 230 290, 80 240, 110 150 C 130 90, 90 60, 100 20"
-        fill="none" stroke="rgba(224,186,118,0.28)" stroke-width="3" stroke-linecap="round"/>
-  <path data-trail-fill
-        d="M 150 980 C 60 900, 60 820, 150 760 C 240 700, 40 640, 120 560 C 190 500, 60 440, 150 360 C 230 290, 80 240, 110 150 C 130 90, 90 60, 100 20"
-        fill="none" stroke="#e0ba76" stroke-width="3" stroke-linecap="round"/>
-  <g data-waypoints></g>
-  <circle data-marker r="7" fill="#e0ba76" stroke="#14100a" stroke-width="2"/>
-</svg>
-
-<!-- Altímetro -->
-<div class="altimetro" aria-hidden="true">
-  <span class="alt-top">Cumbre · 6.380 m</span>
-  <span class="alt-bar"><span class="alt-fill" data-alt-fill></span></span>
-  <span class="alt-read"><b data-alt-value>1.187</b> m</span>
-</div>
+<!-- Ruta de ascenso (mejorada): nodos con altura + marcador -->
+<aside class="route" aria-hidden="true">
+  <svg class="route-svg" viewBox="0 0 120 1000" preserveAspectRatio="xMidYMid meet">
+    <path id="routePath" data-route
+      d="M 80 970 C 30 910, 30 850, 78 800 C 126 750, 20 700, 70 630 C 112 572, 34 520, 82 450 C 124 388, 40 340, 66 260 C 86 196, 52 150, 60 40"
+      fill="none" stroke="rgba(207,154,74,.25)" stroke-width="2.5" stroke-linecap="round"/>
+    <path data-route-fill
+      d="M 80 970 C 30 910, 30 850, 78 800 C 126 750, 20 700, 70 630 C 112 572, 34 520, 82 450 C 124 388, 40 340, 66 260 C 86 196, 52 150, 60 40"
+      fill="none" stroke="#cf9a4a" stroke-width="2.5" stroke-linecap="round"/>
+    <g data-route-nodes></g>
+    <circle data-route-marker r="6.5" fill="#e2b56a" stroke="#16120c" stroke-width="2.5"/>
+  </svg>
+  <div class="route-labels" data-route-labels></div>
+</aside>
 
 <nav class="nav" data-nav>
-  <span class="nav-brand">Apu Outdoors</span>
+  <span class="nav-brand">Apu <em>Outdoors</em></span>
   <span class="nav-zone" data-nav-zone>Río · Pesca</span>
 </nav>
 
 <main>
-  <!-- Hero -->
-  <header class="hero zone" data-zone="0">
-    <p class="kicker">El ascenso · Salta, Argentina</p>
-    <h1>APU<span>OUTDOORS</span></h1>
-    <p class="hero-sub">Subí la montaña. En cada parada, tu equipo.</p>
-    <span class="hint" data-hint>Bajá para empezar a subir ↓</span>
+  <!-- Portada -->
+  <header class="block block-hero" data-block="0">
+    <div class="block-inner">
+      <p class="eyebrow">El ascenso · Salta, Argentina</p>
+      <h1 class="display">Apu <em>Outdoors</em></h1>
+      <p class="lede">Una montaña, cuatro paradas. En cada una, el equipo que la montaña pide — fabricado a pedido.</p>
+      <span class="hint" data-hint>Empezá a subir ↓</span>
+    </div>
   </header>
 
   <!-- Zona 1: Pesca -->
-  <section class="zone" data-zone="0" id="pesca">
-    <div class="panel">
-      <span class="panel-alt">1.187 m · El río</span>
-      <h2>Pesca</h2>
-      <p>Donde empieza el camino. Equipo e indumentaria para el río de montaña.</p>
+  <section class="block" data-block="0">
+    <div class="block-inner card">
+      <span class="node-alt">1.187 m · El río</span>
+      <h2 class="display">Pesca</h2>
+      <p>Donde nace el camino. Equipo e indumentaria para el río de montaña.</p>
       <span class="chip">Próximamente</span>
     </div>
   </section>
 
   <!-- Zona 2: Escalada -->
-  <section class="zone zone-right" data-zone="1" id="escalada">
-    <div class="panel">
-      <span class="panel-alt">4.200 m · La pared</span>
-      <h2>Escalada</h2>
+  <section class="block block-right" data-block="1">
+    <div class="block-inner card">
+      <span class="node-alt">4.200 m · La pared</span>
+      <h2 class="display">Escalada</h2>
       <p>Magnesieras artesanales, cosidas pensando en la roca.</p>
-      <figure><img src="../assets/products/magnesiera-pro.webp" alt="Magnesiera Apu naranja sobre roca" loading="lazy"></figure>
-      <a class="panel-link" href="https://wa.me/5493875330545" target="_blank" rel="noopener">Consultar →</a>
+      <div class="gallery">
+        <figure><img src="../assets/products/magnesiera-pro.webp" alt="Magnesiera Apu naranja sobre roca" loading="lazy"><figcaption>Magnesiera · Naranja</figcaption></figure>
+        <figure><img src="../assets/products/magnesiera-negra.webp" alt="Magnesiera Apu negra sobre roca al atardecer" loading="lazy"><figcaption>Magnesiera · Negra</figcaption></figure>
+      </div>
+      <a class="link" href="https://wa.me/5493875330545" target="_blank" rel="noopener">Consultar magnesieras →</a>
     </div>
   </section>
 
   <!-- Zona 3: Campamento -->
-  <section class="zone" data-zone="2" id="campamento">
-    <div class="panel">
-      <span class="panel-alt">5.100 m · El campamento</span>
-      <h2>Campamento</h2>
+  <section class="block" data-block="2">
+    <div class="block-inner card">
+      <span class="node-alt">5.100 m · El campamento</span>
+      <h2 class="display">Campamento</h2>
       <p>Cae la noche. Carpas y colchonetas para dormir en altura.</p>
-      <figure><img src="../assets/images/camp-base.webp" alt="Carpa iluminada al anochecer" loading="lazy"></figure>
-      <a class="panel-link" href="https://wa.me/5493875330545" target="_blank" rel="noopener">Consultar →</a>
+      <div class="gallery gallery-1">
+        <figure><img src="../assets/images/camp-base.webp" alt="Carpa iluminada al anochecer en el campamento base" loading="lazy"><figcaption>Colchonetas y carpas · a pedido</figcaption></figure>
+      </div>
+      <a class="link" href="https://wa.me/5493875330545" target="_blank" rel="noopener">Consultar equipo de acampe →</a>
     </div>
   </section>
 
   <!-- Zona 4: Montañismo -->
-  <section class="zone zone-right" data-zone="3" id="montanismo">
-    <div class="panel">
-      <span class="panel-alt">6.380 m · La cumbre</span>
-      <h2>Montañismo</h2>
-      <p>Bolsas de dormir, abrigos y camperas. Para la noche andina.</p>
-      <figure><img src="../assets/products/bolsa-pro.webp" alt="Bolsa de dormir Apu junto a la carpa" loading="lazy"></figure>
-      <a class="panel-link" href="https://wa.me/5493875330545" target="_blank" rel="noopener">Consultar →</a>
+  <section class="block block-right" data-block="3">
+    <div class="block-inner card">
+      <span class="node-alt">6.380 m · La cumbre</span>
+      <h2 class="display">Montañismo</h2>
+      <p>Bolsas de dormir a medida, abrigos y camperas. Para la noche andina.</p>
+      <div class="gallery">
+        <figure><img src="../assets/products/bolsa-pro.webp" alt="Bolsa de dormir Apu roja junto a la carpa al anochecer" loading="lazy"><figcaption>Bolsa de dormir · Roja</figcaption></figure>
+        <figure><img src="../assets/products/bolsa-amanecer.webp" alt="Bolsa de dormir Apu al amanecer en la roca" loading="lazy"><figcaption>Bolsa de dormir · Verde</figcaption></figure>
+      </div>
+      <a class="link" href="https://wa.me/5493875330545" target="_blank" rel="noopener">Consultar bolsas de dormir →</a>
     </div>
   </section>
 
-  <!-- Cierre -->
-  <section class="zone zone-center" data-zone="3">
-    <div class="panel panel-center">
-      <h2>Llegaste a la cumbre</h2>
-      <p>Vos elegís la salida. Nosotros cosemos el resto.</p>
-      <a class="btn" href="https://wa.me/5493875330545" target="_blank" rel="noopener">Empezar un pedido</a>
+  <!-- Cierre real -->
+  <section class="block block-center" data-block="3">
+    <div class="block-inner card card-summit">
+      <span class="node-alt">Cumbre · 6.380 m</span>
+      <h2 class="display">Llegaste arriba.<br><em>Ahora armá tu salida.</em></h2>
+      <p>Cuatro terrenos, un mismo oficio: cada pieza cosida a pedido en Salta.</p>
+      <ul class="recap">
+        <li><span>Pesca</span><i>Próximamente</i></li>
+        <li><span>Escalada</span><i>Magnesieras</i></li>
+        <li><span>Campamento</span><i>Carpas · Colchonetas</i></li>
+        <li><span>Montañismo</span><i>Bolsas · Abrigos</i></li>
+      </ul>
+      <a class="btn" href="https://wa.me/5493875330545?text=Hola%20Apu%20Outdoors%2C%20quiero%20hacer%20un%20pedido." target="_blank" rel="noopener">Empezar un pedido por WhatsApp</a>
+      <p class="foot">Apu Outdoors · Salta, Argentina · Fabricación a pedido</p>
     </div>
   </section>
 </main>
 
-<script defer src="proto.js?v=1"></script>
+<script defer src="proto.js?v=3"></script>
 </body>
 </html>
